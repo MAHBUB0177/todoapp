@@ -4,6 +4,13 @@ import { v4 as uuidv4 } from 'uuid';
 import Head from 'next/head';
 import { BsThreeDots } from 'react-icons/bs';
 import { FaPlus } from 'react-icons/fa6';
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from 'react-beautiful-dnd';
+
 
 export default function TodoPage() {
   const [todos, setTodos] = useState([]);
@@ -29,9 +36,29 @@ export default function TodoPage() {
     setstatusLael('');
   };
 
-  const newTodos = todos.filter((item) => item.statusLabel.toLowerCase() === 'new');
-  const ongoingTodos = todos.filter((item) => item.statusLabel.toLowerCase() === 'ongoing');
-  const doneTodos = todos.filter((item) => item.statusLabel.toLowerCase() === 'done');
+  // const newTodos = todos.filter((item) => item.statusLabel.toLowerCase() === 'new');
+  // const ongoingTodos = todos.filter((item) => item.statusLabel.toLowerCase() === 'ongoing');
+  // const doneTodos = todos.filter((item) => item.statusLabel.toLowerCase() === 'done');
+  const groupedTodos = {
+  new: todos.filter((t) => t.statusLabel === 'new'),
+  ongoing: todos.filter((t) => t.statusLabel === 'ongoing'),
+  done: todos.filter((t) => t.statusLabel === 'done'),
+};
+
+
+//dragdrop
+const onDragEnd = (result) => {
+  const { destination, source, draggableId } = result;
+
+  if (!destination || destination.droppableId === source.droppableId) return;
+
+  setTodos((prev) =>
+    prev.map((todo) =>
+      todo.id === draggableId ? { ...todo, statusLabel: destination.droppableId } : todo
+    )
+  );
+};
+
 
   useEffect(() => {
     const handleClickOutside = () => {
@@ -145,8 +172,8 @@ export default function TodoPage() {
           </ul>
         )}
 
-        <div className="grid gap-4 lg:gap-8 md:grid-cols-3 p-8">
-          {/* New Column */}
+        {/* <div className="grid gap-4 lg:gap-8 md:grid-cols-3 p-8">
+        
           <div className="p-6 rounded-2xl bg-slate-200 shadow space-y-4 h-auto">
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm font-medium">
@@ -166,7 +193,7 @@ export default function TodoPage() {
             </div>
           </div>
 
-          {/* Ongoing Column */}
+          
           <div className="p-6 rounded-2xl bg-slate-200 shadow space-y-4 h-auto">
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm font-medium">
@@ -177,7 +204,7 @@ export default function TodoPage() {
             </div>
           </div>
 
-          {/* Done Column */}
+          
           <div className="p-6 rounded-2xl bg-slate-200 shadow space-y-4 h-auto">
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm font-medium">
@@ -187,7 +214,71 @@ export default function TodoPage() {
               <div className="space-y-3">{renderTodoCard(doneTodos, 'bg-green-400')}</div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <DragDropContext onDragEnd={onDragEnd}>
+  <div className="grid gap-4 lg:gap-8 md:grid-cols-3 p-8">
+    {['new', 'ongoing', 'done'].map((status) => (
+      <Droppable droppableId={status} key={status}>
+        {(provided) => (
+          <div
+            className="p-6 rounded-2xl bg-slate-200 shadow space-y-4 h-auto"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <div className="space-y-2">
+              <div className="flex justify-between items-center text-sm font-medium">
+                <p className="capitalize">{status}</p>
+                <BsThreeDots className="text-lg" />
+              </div>
+              <div className="space-y-3">
+                {groupedTodos[status].map((item, index) => (
+                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        onContextMenu={(e) => handleRightClick(e, item)}
+                        className="bg-white rounded-md shadow p-4 hover:shadow-md transition"
+                      >
+                        <p
+                          className={`font-medium ${
+                            status === 'new'
+                              ? 'bg-blue-400'
+                              : status === 'ongoing'
+                              ? 'bg-orange-400'
+                              : 'bg-green-400'
+                          } px-1 rounded-md text-white w-fit`}
+                        >
+                          {item.statusLabel.toUpperCase()}
+                        </p>
+                        <p className="text-gray-500 text-sm pt-2">{item.description}</p>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+
+              
+                <div className="flex justify-between pt-4">
+                  <div
+                    className="flex items-center gap-2 text-blue-600 hover:text-blue-800 cursor-pointer"
+                    onClick={() => setShow((prev) => !prev)}
+                  >
+                    <FaPlus className="text-lg" />
+                    <p>Add a Card</p>
+                  </div>
+                </div>
+             
+            </div>
+          </div>
+        )}
+      </Droppable>
+    ))}
+  </div>
+</DragDropContext>
+
       </div>
     </>
   );
