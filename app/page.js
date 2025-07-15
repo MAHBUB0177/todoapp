@@ -8,6 +8,7 @@ export default function Home() {
     <div className="pb-[50px]">
       <div className=" px-4 lg:px-20 ">
         {/* <LandingPage /> */}
+        <TodoPage/>
       </div>
       {/* <Service /> */}
     </div>
