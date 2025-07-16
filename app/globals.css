@@ -24,3 +24,11 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* Prevent page scroll and global drag floating */
+/* globals.css or inside <style jsx global> */
+html,
+body {
+  overflow-x: hidden;
+  position: relative;
+}
+
