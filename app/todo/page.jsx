@@ -295,7 +295,7 @@ useEffect(() => {
                       <div className="flex justify-between pt-4">
                         <div
                           className={`flex items-center gap-2 ${status == 'new' ? 'text-blue-600 hover:text-blue-800 cursor-pointer text-lg font-medium' : "text-lg font-medium text-slate-400 "}`}
-                          onClick={() => setShow((prev) => !prev)}
+                              onClick={status === 'new' ? () => setShow((prev) => !prev) : undefined}
                         >
                           <FaPlus className="" />
                           <p>Add a Card</p>
