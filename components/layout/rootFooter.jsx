@@ -18,15 +18,16 @@ const RootFooter = () => {
                       <circle cx="259" cy="156" r="40" fill="#fff"></circle>
                       <circle cx="369" cy="286" r="40" fill="#2962FF"></circle>
                     </g>
-                    {/* <text fill="white" font-family="Nunito-Bold, Nunito" font-size="512" font-weight="bold">
-                      <tspan x="654" y="518">Tailwindow</tspan>
-                    </text> */}
+                    <text fill="white" font-family="Nunito-Bold, Nunito" font-size="512" font-weight="bold">
+                      <tspan x="654" y="518">Kanban</tspan>
+                    </text>
+                    {/* <p className='text-white font-semibold text-2xl'>Kanbanow</p> */}
                   </g>
                 </g>
               </svg>
             </a>
             <p className="text-justify">
-              Tailwindow is a collection of UI Components created using Tailwind CSS Framework. The UI Components gives you all of the building blocks you need to build any designs without any annoying opinionated styles you have to fight to override.
+              Kanban is a collection of UI Components created using Kanban CSS Framework. The UI Components gives you all of the building blocks you need to build any designs without any annoying opinionated styles you have to fight to override.
             </p>
           </div>
 
@@ -48,7 +49,7 @@ const RootFooter = () => {
             <ul className="leading-8">
               <li><a href="#" className="hover:text-blue-400">Getting Started With HTML and CSS</a></li>
               <li><a href="#" className="hover:text-blue-400">What Is Flex And When to Use It?</a></li>
-              <li><a href="#" className="hover:text-blue-400">How TailwindCSS Can Help Your Productivity?</a></li>
+              <li><a href="#" className="hover:text-blue-400">How KanbanCSS Can Help Your Productivity?</a></li>
               <li><a href="#" className="hover:text-blue-400">5 Tips to Make Responsive Website</a></li>
               <li><a href="#" className="hover:text-blue-400">See More</a></li>
             </ul>
@@ -92,10 +93,10 @@ const RootFooter = () => {
           <div className="px-4 w-full text-center sm:w-auto sm:text-left">
             Copyright © 2020
             <script>new Date().getFullYear()  2020 && document.write("- " + new Date().getFullYear())</script>- 2022
-            Tailwindow. All Rights Reserved.
+            Kanban. All Rights Reserved.
           </div>
           <div className="px-4 w-full text-center sm:w-auto sm:text-left">
-            Made with ❤️ by Tailwindow.
+            Made with ❤️ by Kanban.
           </div>
         </div>
       </div>

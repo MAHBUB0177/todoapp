@@ -29,10 +29,6 @@ export default function TodoPage() {
 
   const createTodo = () => {
     if (!title.trim()) return;
-    // setTodos([
-    //   { id: uuidv4(), title, description, statusLabel, createdAt: new Date() },
-    //   ...todos,
-    // ]);
     setTodos([
       {
         id: uuidv4(),
@@ -70,7 +66,7 @@ export default function TodoPage() {
 
 
   
-
+//drag and drop functionality
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
     if (!destination || destination.droppableId === source.droppableId) return;
@@ -203,12 +199,12 @@ useEffect(() => {
 
 
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className="grid gap-4 lg:gap-8 md:grid-cols-3 p-8">
+          <div className="grid gap-4 lg:gap-8 md:grid-cols-3 p-8 items-start">
             {['new', 'ongoing', 'done'].map((status) => (
               <Droppable droppableId={status} key={status}>
                 {(provided) => (
                   <div
-                    className="p-6 rounded-2xl bg-slate-200 shadow space-y-4 h-auto"
+                     className="p-6 rounded-2xl bg-slate-200 shadow space-y-4 flex flex-col"
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                   >
@@ -260,7 +256,7 @@ useEffect(() => {
                                     {/* Display selected value */}
                                     {item.dueTime && new Date(item.dueTime) < now ?
                                       (
-                                        <p className='text-white bg-red-300 p-1 rounded-md'>This task is past its due time.</p>
+                                        <p className='text-white bg-red-400 p-1 rounded-md'>This task is past its due time.</p>
                                       ) :
                                       <>
                                         <p className="text-sm text-gray-700">
